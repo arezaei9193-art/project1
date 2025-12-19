@@ -1,9 +1,12 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import src.NationalCodeValidator;
 
 public class Main {
-    static void main(String[] args) {
+
+    public static void main(String[] args) {
+
         Map<String, String> studentMap = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
 
@@ -19,25 +22,41 @@ public class Main {
             String choice = scanner.nextLine();
 
             switch (choice) {
+
                 case "1" -> {
                     System.out.print("Enter Student Name: ");
                     String name = scanner.nextLine();
+
                     System.out.print("Enter National Code: ");
                     String code = scanner.nextLine();
+
+                    // ✅ اعتبارسنجی کد ملی
+                    if (!NationalCodeValidator.isValid(code)) {
+                        System.out.println("❌ Invalid National Code!");
+                        break;
+                    }
+
                     studentMap.put(code, name);
-                    System.out.println("Student added successfully!");
+                    System.out.println("✅ Student added successfully!");
                 }
+
                 case "2" -> {
                     System.out.print("Enter National Code to search: ");
                     String searchCode = scanner.nextLine();
-                    String result = studentMap.getOrDefault(searchCode, "Student not found.");
-                    System.out.println("Result: " + result);
+
+                    if (studentMap.containsKey(searchCode)) {
+                        System.out.println("✅ Student Name: " + studentMap.get(searchCode));
+                    } else {
+                        System.out.println("❌ Student not found.");
+                    }
                 }
+
                 case "3" -> {
                     System.out.println("Exiting...");
                     return;
                 }
-                default -> System.out.println("Invalid option.");
+
+                default -> System.out.println("❌ Invalid option.");
             }
         }
     }

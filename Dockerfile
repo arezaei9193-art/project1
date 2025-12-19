@@ -1,10 +1,14 @@
-FROM eclipse-temurin:25-jdk-noble
-LABEL authors="omid"
+# استفاده از JDK 25 رسمی
+FROM openjdk:25-jdk
 
+# پوشه کاری داخل کانتینر
 WORKDIR /app
 
-COPY Main.java .
+# کپی کردن سورس‌ها به کانتینر
+COPY src /app/src
 
-RUN javac Main.java
+# کامپایل کردن فایل‌های جاوا
+RUN javac src/*.java -d /app/out
 
-CMD ["java", "Main"]
+# تعیین کلاس اصلی برای اجرا
+CMD ["java", "-cp", "out", "Main"]
